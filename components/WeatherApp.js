@@ -18,7 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-// 📏 FONCTIONS RESPONSIVE
+
 const scaleSize = (size) => (width / 375) * size; // Base iPhone 8
 const scaleFont = (size) => (width / 375) * size;
 const isTablet = width > 768;
@@ -26,14 +26,14 @@ const isTablet = width > 768;
 const API_KEY = process.env.EXPO_PUBLIC_OPENWEATHER_API_KEY;
 
 export default function WeatherApp() {
-  // 📦 ÉTATS
+ 
   const [city, setCity] = useState('Paris');
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // 🎬 ANIMATIONS
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
 
@@ -58,7 +58,7 @@ export default function WeatherApp() {
     }
   }, [weatherData]);
 
-  // 🌡️ COULEURS DYNAMIQUES EN FONCTION DE LA TEMPÉRATURE
+ 
   const getTemperatureColors = (temp) => {
     if (temp > 30) return ['#d4a373', '#e76f51', '#f4a261'];
     if (temp > 20) return ['#d4a373', '#e9c46a', '#f4a261'];
@@ -67,7 +67,7 @@ export default function WeatherApp() {
     return ['#d4a373', '#8ba9c7', '#5a7d9c'];
   };
 
-  // 🌐 RÉCUPÉRER LA MÉTÉO
+
   const fetchWeather = async () => {
     if (!city.trim()) {
       Alert.alert('Info', 'Veuillez entrer le nom d\'une ville.');
@@ -105,7 +105,7 @@ export default function WeatherApp() {
     }
   };
 
-  // 🎨 CHOISIR L'ICÔNE MÉTÉO
+
   const getWeatherIcon = (iconCode) => {
     if (!iconCode) return 'cloudy';
     switch (iconCode) {
@@ -124,7 +124,7 @@ export default function WeatherApp() {
     }
   };
 
-  // 📅 FONCTION POUR REGROUPER PAR JOUR (7 JOURS)
+
   const getDailyForecast = (list) => {
     if (!list || list.length === 0) return [];
 
@@ -178,7 +178,7 @@ export default function WeatherApp() {
   const dailyForecast = getDailyForecast(forecastData);
   const tempColors = weatherData ? getTemperatureColors(weatherData.main.temp) : ['#d4a373', '#b88655'];
 
-  // 🖼️ AFFICHAGE
+
   return (
     <LinearGradient
       colors={['#0a0a0f', '#1a1a1f', '#0a0a12']}
@@ -188,7 +188,7 @@ export default function WeatherApp() {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* 🔍 BARRE DE RECHERCHE LUXE */}
+      
         <View style={styles.searchContainer}>
           <BlurView intensity={40} style={styles.searchBar} tint="dark">
             <Ionicons name="search-outline" size={scaleSize(20)} color="#d4a373" />
@@ -211,7 +211,7 @@ export default function WeatherApp() {
           </BlurView>
         </View>
 
-        {/* ⏳ CHARGEMENT */}
+        
         {loading && (
           <View style={styles.centerContent}>
             <ActivityIndicator size="large" color="#d4a373" />
@@ -219,7 +219,7 @@ export default function WeatherApp() {
           </View>
         )}
 
-        {/* ❌ ERREUR */}
+    
         {error && (
           <View style={styles.centerContent}>
             <Ionicons name="alert-circle" size={scaleSize(50)} color="#d4a373" />
@@ -227,7 +227,7 @@ export default function WeatherApp() {
           </View>
         )}
 
-        {/* ☀️ MÉTÉO AFFICHÉE AVEC ANIMATIONS */}
+        
         {weatherData && (
           <Animated.View
             style={[
@@ -238,7 +238,7 @@ export default function WeatherApp() {
               },
             ]}
           >
-            {/* Ville et pays */}
+            
             <View style={styles.locationContainer}>
               <Ionicons name="location-outline" size={scaleSize(16)} color="#d4a373" />
               <Text style={styles.cityName}>
@@ -246,7 +246,7 @@ export default function WeatherApp() {
               </Text>
             </View>
 
-            {/* Aura dorée dynamique */}
+          
             <View style={styles.auraContainer}>
               <LinearGradient
                 colors={[
@@ -273,7 +273,7 @@ export default function WeatherApp() {
               </View>
             </View>
 
-            {/* 📊 3 CARTES DÉTAILS LUXE */}
+            
             <View style={styles.detailsRow}>
               <BlurView intensity={30} style={styles.detailCard} tint="dark">
                 <View style={styles.detailIconContainer}>
@@ -302,7 +302,7 @@ export default function WeatherApp() {
               </BlurView>
             </View>
 
-            {/* PRÉVISIONS HORAIRES */}
+       
             {forecastData.length > 0 && (
               <View style={styles.hourlyContainer}>
                 <Text style={styles.hourlyTitle}>Prévisions horaires</Text>
@@ -336,7 +336,7 @@ export default function WeatherApp() {
               </View>
             )}
 
-            {/* PRÉVISIONS PAR JOUR (7 jours) */}
+           
             {dailyForecast.length > 0 && (
               <View style={styles.dailyContainer}>
                 <Text style={styles.dailyTitle}>Semaine</Text>
@@ -368,7 +368,7 @@ export default function WeatherApp() {
           </Animated.View>
         )}
 
-        {/* 🏠 ÉCRAN D'ACCUEIL */}
+        
         {!weatherData && !loading && !error && (
           <View style={styles.centerContent}>
             <Ionicons name="cloud-outline" size={scaleSize(80)} color="rgba(212, 163, 115, 0.2)" />
@@ -381,7 +381,7 @@ export default function WeatherApp() {
   );
 }
 
-// 🎨 STYLES "LUXURY MIDNIGHT" RESPONSIVE
+
 const styles = StyleSheet.create({
   gradient: { flex: 1 },
 
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     paddingBottom: scaleSize(30),
   },
 
-  // 🔍 Barre de recherche
+ 
   searchContainer: { marginBottom: scaleSize(30) },
   searchBar: {
     flexDirection: 'row',
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // ☀️ Météo principale
+ 
   weatherContainer: { alignItems: 'center', width: '100%' },
 
   locationContainer: {
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // 📊 3 cartes détails
+
   detailsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Prévisions horaires
+  
   hourlyContainer: { marginTop: scaleSize(28), width: '100%' },
   hourlyTitle: {
     fontSize: scaleFont(isTablet ? 18 : 16),
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
     marginTop: scaleSize(6),
   },
 
-  // Prévisions par jour (7 jours)
+ 
   dailyContainer: { marginTop: scaleSize(24), width: '100%', marginBottom: scaleSize(16) },
   dailyTitle: {
     fontSize: scaleFont(isTablet ? 18 : 16),
@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
     marginTop: scaleSize(6),
   },
 
-  // ⏳ Chargement / Erreur / Accueil
+  
   centerContent: {
     flex: 1,
     alignItems: 'center',
